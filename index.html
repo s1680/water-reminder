@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#2196f3">
+<link rel="manifest" href="manifest.json">
+<title>💧喝水提醒器</title>
+
+<style>
+body{
+margin:0;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial,"Microsoft YaHei",sans-serif;
+background:linear-gradient(135deg,#74ebd5,#9face6);
+}
+
+.card{
+width:300px;
+padding:30px;
+text-align:center;
+background:white;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.water{
+font-size:65px;
+}
+
+h1{
+color:#2196f3;
+}
+
+select,button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:12px;
+font-size:16px;
+}
+
+select{
+border:1px solid #ddd;
+}
+
+button{
+border:0;
+}
+
+.start{
+background:#4caf50;
+color:white;
+}
+
+.pause{
+background:#eee;
+}
+
+#countdown{
+font-size:30px;
+font-weight:bold;
+margin:20px 0;
+}
+
+.creator{
+position:fixed;
+bottom:18px;
+font-size:14px;
+color:white;
+opacity:.85;
+letter-spacing:1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="water">💧</div>
+
+<h1>喝水提醒器</h1>
+
+<p>选择提醒间隔</p>
+
+<select id="minutes">
+<option value="1">1分钟</option>
+<option value="5">5分钟</option>
+<option value="15">15分钟</option>
+<option value="30">30分钟</option>
+<option value="60">60分钟</option>
+</select>
+
+<div id="countdown">等待开始</div>
+
+<button class="start" onclick="startTimer()">▶ 开始</button>
+<button class="pause" onclick="pauseTimer()">⏸ 暂停</button>
+
+</div>
+
+<div class="creator">
+Created by SXH Studio
+</div>
+
+<script>
+let timer;
+let secondsLeft=0;
+
+function startTimer(){
+
+clearInterval(timer);
+
+let minutes=Number(document.getElementById("minutes").value);
+
+secondsLeft=minutes*60;
+
+update();
+
+timer=setInterval(function(){
+
+secondsLeft--;
+
+update();
+
+if(secondsLeft<=0){
+
+alert("💧 该喝水啦！");
+
+secondsLeft=minutes*60;
+
+}
+
+},1000);
+
+}
+
+
+function pauseTimer(){
+
+clearInterval(timer);
+
+document.getElementById("countdown").innerHTML="已暂停";
+
+}
+
+
+function update(){
+
+let m=Math.floor(secondsLeft/60);
+
+let s=secondsLeft%60;
+
+document.getElementById("countdown").innerHTML=
+secondsLeft ? m+":"+String(s).padStart(2,"0") : "等待开始";
+
+}
+
+</script>
+
+</body>
+</html>

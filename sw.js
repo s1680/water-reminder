@@ -1,5 +1,19 @@
-self.addEventListener("install", function(event) {
-  console.log("喝水提醒器已安装");
+const CACHE_NAME="water-reminder-v1";
+
+self.addEventListener("install",event=>{
+event.waitUntil(
+caches.open(CACHE_NAME)
+.then(cache=>cache.addAll([
+"./",
+"./index.html",
+"./manifest.json"
+]))
+);
 });
-self.addEventListener("fetch", function(event) {
+
+self.addEventListener("fetch",event=>{
+event.respondWith(
+caches.match(event.request)
+.then(response=>response||fetch(event.request))
+);
 });
